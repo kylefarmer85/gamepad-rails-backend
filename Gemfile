@@ -20,6 +20,10 @@ gem 'active_model_serializers'
 
 gem "jwt", "~> 2.2"
 
+gem 'rest-client'
+gem 'uri'
+
+gem 'dotenv-rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
