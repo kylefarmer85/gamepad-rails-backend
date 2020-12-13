@@ -1,5 +1,10 @@
 class Api::V1::UsersController < ApplicationController
 
+  def index
+    users = User.all
+    render json: users
+  end
+
   def create
     
     user = User.create(username: params[:username], password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], pic: params[:pic], fav_genre: params[:fav_genre], fav_game: params[:fav_game])

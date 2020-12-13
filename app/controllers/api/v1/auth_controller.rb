@@ -21,6 +21,6 @@ class Api::V1::AuthController < ApplicationController
     user_id = decoded_token[0]['user_id']
     user = User.find(user_id)
 
-    render json: { user: {id: user.id, username: user.username},  notes: user.notes }
+    render json: { user: {id: user.id, username: user.username},  games: user.games }
   end
 end
