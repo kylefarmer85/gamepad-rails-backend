@@ -8,13 +8,13 @@ class Api::V1::GamesController < ApplicationController
 
     response = RestClient.get(url, headers = {
       'Content-Type': 'application/json',
-      'User-Agent': 'Coding Bootcamp Project',
+      'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
       'token': key
     })
 
     response_ss = RestClient.get(url_ss, headers = {
       'Content-Type': 'application/json',
-      'User-Agent': 'Coding Bootcamp Project',
+      'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
       'token': key
     })
 
@@ -31,7 +31,7 @@ class Api::V1::GamesController < ApplicationController
 
     response = RestClient.get(url, headers ={
       'Content-Type': 'application/json',
-      'User-Agent': 'Coding Bootcamp Project',
+      'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
       'token': key
     })
 
@@ -39,6 +39,7 @@ class Api::V1::GamesController < ApplicationController
     render json: search_results
   end
 
+  # user.favorites.map {|f| f.game}
 
   def favorites
     user_id = params[:user_id]
@@ -47,15 +48,19 @@ class Api::V1::GamesController < ApplicationController
     game_image = params[:game_image]
 
     games = Game.all
-    found_game = games.find {|game| game.game_api_id == game_api_id}
+    found_game = games.find_by(game_api_id: game_api_id)
     
     if found_game
       Favorite.create(user_id: user_id, game_id: found_game.id)
+
+      render json: {id: found_game.id, name: found_game.name, image: found_game.image, game_api_id: found_game.game_api_id}
+
     else
       new_game = Game.create(name: game_name, image: game_image, game_api_id: game_api_id)
+      
       Favorite.create(user_id: user_id, game_id: new_game.id)
-    end
 
-    render json: {name: game_name, image: game_image, game_api_id: game_api_id}
+      render json: {id: new_game.id, name: new_game.name, image: new_game.image, game_api_id: new_game.game_api_id}
+    end
   end
 end

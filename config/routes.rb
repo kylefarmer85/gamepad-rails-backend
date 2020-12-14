@@ -6,11 +6,13 @@ Rails.application.routes.draw do
       resources :users
       resources :reviews
       resources :favorites
+      post '/auth', to: 'auth#create'
+      get '/current_user', to: 'auth#show'
       post '/games/search', to: 'games#search'
       get '/games/:id', to: 'games#show'
       post '/games/favorites', to: 'games#favorites'
-      post '/auth', to: 'auth#create'
-      get '/current_user', to: 'auth#show'
+      post '/games/reviews/all', to: 'reviews#game_reviews_all'
+
     end 
   end
 end
