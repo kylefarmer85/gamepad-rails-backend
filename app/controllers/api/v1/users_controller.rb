@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       payload = { user_id: user.id }
       token = JWT.encode(payload, 'my_secret', 'HS256')
-        render json: { user: {id: user.id, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game }, games: user.games, reviews: user.reviews, token: token}
+        render json: { user: {id: user.id, username: user.username, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game }, games: user.games, reviews: user.reviews, token: token}
     else
         render json: {error: user.errors.full_messages}, status: 401
     end
