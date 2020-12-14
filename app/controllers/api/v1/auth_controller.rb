@@ -8,7 +8,7 @@ class Api::V1::AuthController < ApplicationController
 
       token = JWT.encode(payload, 'my_secret', 'HS256')
 
-      render json: { user: user, token: token }
+      render json: { user: {id: user.id, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game }, games: user.games, reviews: user.reviews, token: token}
     else
       render json: { error: user.errors.full_messages }, status: 401
     end
@@ -21,6 +21,6 @@ class Api::V1::AuthController < ApplicationController
     user_id = decoded_token[0]['user_id']
     user = User.find(user_id)
 
-    render json: { user: {id: user.id, username: user.username},  games: user.games }
+    render json: { user: {id: user.id, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game }, games: user.games, reviews: user.reviews}
   end
 end

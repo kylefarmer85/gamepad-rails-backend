@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   namespace :api do 
     namespace :v1 do
       # resources :games
-      post '/search', to: 'games#search'
       resources :users
       resources :reviews
       resources :favorites
+      post '/games/search', to: 'games#search'
+      get '/games/:id', to: 'games#show'
+      post '/games/favorites', to: 'games#favorites'
       post '/auth', to: 'auth#create'
       get '/current_user', to: 'auth#show'
     end 
