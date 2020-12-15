@@ -47,17 +47,19 @@ class Api::V1::GamesController < ApplicationController
     game_name = params[:game_name]
     game_image = params[:game_image]
 
+    #checks if game is in db 
     games = Game.all
     found_game = games.find_by(game_api_id: game_api_id)
-    
+
+    #if so we create a new favorit with user and game ids
     if found_game
       Favorite.create(user_id: user_id, game_id: found_game.id)
-
+      
       render json: {id: found_game.id, name: found_game.name, image: found_game.image, game_api_id: found_game.game_api_id}
 
+    #if game is not in db, we create a game obj and then create a new favorite with user and game ids
     else
       new_game = Game.create(name: game_name, image: game_image, game_api_id: game_api_id)
-      
       Favorite.create(user_id: user_id, game_id: new_game.id)
 
       render json: {id: new_game.id, name: new_game.name, image: new_game.image, game_api_id: new_game.game_api_id}

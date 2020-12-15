@@ -4,14 +4,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       # resources :games
       resources :users
-      resources :reviews
       resources :favorites
+      resources :games, only: [:show]
+      resources :reviews, only: [:destroy]
       post '/auth', to: 'auth#create'
       get '/current_user', to: 'auth#show'
       post '/games/search', to: 'games#search'
-      get '/games/:id', to: 'games#show'
-      post '/games/favorites', to: 'games#favorites'
-      post '/games/reviews/all', to: 'reviews#game_reviews_all'
+      post '/games/favorites', to: 'games#favorites' #change to favorites controller?
+      post '/reviews/all', to: 'reviews#reviews_all'
+
 
     end 
   end
