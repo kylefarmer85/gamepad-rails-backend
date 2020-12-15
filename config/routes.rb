@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       resources :users
       resources :favorites
       resources :games, only: [:show]
-      resources :reviews, only: [:destroy]
+      resources :reviews, only: [:destroy, :create]
       post '/auth', to: 'auth#create'
       get '/current_user', to: 'auth#show'
       post '/games/search', to: 'games#search'
