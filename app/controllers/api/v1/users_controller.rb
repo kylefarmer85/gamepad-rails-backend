@@ -5,6 +5,7 @@ class Api::V1::UsersController < ApplicationController
     render json: users
   end
 
+
   def create
     
     user = User.create(username: params[:username], password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], pic: params[:pic], fav_genre: params[:fav_genre], fav_game: params[:fav_game])
@@ -18,6 +19,21 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+
+  def update
+   
+    user = User.find(params[:id])
+    user.assign_attributes(user_params)
+  
+    if user.valid?      
+        user.save
+        render json: user
+    else
+        render json: user.errors.full_messages
+    end
+  end
+
+
   def destroy
     user = User.find(params[:id])
     user.destroy
@@ -25,4 +41,8 @@ class Api::V1::UsersController < ApplicationController
     render json: user
   end
 
+
+  def user_params
+    params.require(:user).permit(:username, :password, :password, :password_confirmation, :email, :pic, :fav_genre, :fav_game)
+  end
 end
