@@ -19,7 +19,7 @@ class Api::V1::ReviewsController < ApplicationController
     username = params[:username]
     user_pic = params[:user_pic]
     content = params[:content]
-    rating = params[:content]
+    rating = params[:rating]
     game_name = params[:game_name]
     game_api_id = params[:game_api_id]
     game_image = params[:game_image]
