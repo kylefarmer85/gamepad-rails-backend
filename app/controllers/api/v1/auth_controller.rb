@@ -25,4 +25,4 @@ class Api::V1::AuthController < ApplicationController
   end
 end
 
-{ user: {id: user.id, username: user.username, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game }, games: user.games, reviews: user.reviews}
+# { user: {id: user.id, username: user.username, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game }, games: user.games, reviews: user.reviews}
