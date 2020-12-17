@@ -9,10 +9,12 @@ Rails.application.routes.draw do
       resources :reviews, only: [:destroy, :create]
       post '/auth', to: 'auth#create'
       get '/current_user', to: 'auth#show'
+
       post '/games/search', to: 'games#search'
       post '/games/favorites', to: 'games#favorites' #change to favorites controller?
-      post '/reviews/all', to: 'reviews#reviews_all'
+      post '/games/consoleandgenre', to: 'games#console_and_genre'
 
+      post '/reviews/all', to: 'reviews#reviews_all'
 
     end 
   end
