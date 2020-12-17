@@ -26,20 +26,20 @@ class Api::V1::ReviewsController < ApplicationController
 
     games = Game.all
     found_game = games.find_by(game_api_id: game_api_id)
-
-    #if game in db create a review with it's game id
+   
+    #if game already in db create a review with it's game id
     if found_game 
-      review = Review.create(user_id: user_id, game_id: found_game.id, game_name: game_name, content: content, rating: rating, username: username, user_pic: user_pic)   
+      review = Review.create(user_id: user_id, game_id: found_game.id, game_name: game_name, content: content, rating: rating, username: username, user_pic: user_pic, game_api_id: game_api_id)   
 
-      render json: {id: review.id, user_id: review.user_id, game_id: review.game_id, game_name: review.game_name, content: review.content, rating: review.rating, username: review.username, user_pic: review.user_pic}
+      render json: {id: review.id, user_id: review.user_id, game_id: review.game_id, game_name: review.game_name, content: review.content, rating: review.rating, username: review.username, user_pic: review.user_pic, game_api_id: review.game_api_id}
 
-    #else create a new game in db, and then use the game id for the new review  
+    #else create a new game in db, and then use the new game id for the new review  
     else 
       new_game = Game.create(name: game_name, image: game_image, game_api_id: game_api_id)    
 
-      review = Review.create(user_id: user_id, game_id: new_game.id, game_name: game_name, content: content, rating: rating, username: username, user_pic: user_pic)
+      review = Review.create(user_id: user_id, game_id: new_game.id, game_name: game_name, content: content, rating: rating, username: username, user_pic: user_pic, game_api_id: game_api_id)
 
-      render json: {id: review.id, user_id: review.user_id, game_id: review.game_id, game_name: review.game_name, content: review.content, rating: review.rating, username: review.username, user_pic: review.user_pic}
+      render json: {id: review.id, user_id: review.user_id, game_id: review.game_id, game_name: review.game_name, content: review.content, rating: review.rating, username: review.username, user_pic: review.user_pic, game_api_id: review.game_api_id}
     end
   end
 
