@@ -68,10 +68,10 @@ class Api::V1::GamesController < ApplicationController
     console = params[:console]
     console_id = console_list[:"#{console}"]
     
-    genre = params[:genre].downcase
+    genre = params[:genre].sub(/^[A-Z]/) {|f| f.downcase }
    
     # rpg has to go into the api genre like this  
-    if genre == "rPG"
+    if genre === "rPG"
       genre = "role-playing-games-rpg"
     end  
 
