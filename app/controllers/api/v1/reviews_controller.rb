@@ -35,7 +35,7 @@ class Api::V1::ReviewsController < ApplicationController
 
     #else create a new game in db, and then use the game id for the new review  
     else 
-      new_game = Game.create(game_name: game_name, game_image: game_image, game_api_id: game_api_id)    
+      new_game = Game.create(name: game_name, image: game_image, game_api_id: game_api_id)    
 
       review = Review.create(user_id: user_id, game_id: new_game.id, game_name: game_name, content: content, rating: rating, username: username, user_pic: user_pic)
 
