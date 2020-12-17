@@ -70,7 +70,7 @@ class Api::V1::GamesController < ApplicationController
     
     genre = params[:genre].sub(/^[A-Z]/) {|f| f.downcase }
    
-    # rpg has to go into the api genre like this  
+    # rpg has to go into the api query like this  
     if genre === "rPG"
       genre = "role-playing-games-rpg"
     end  
@@ -79,7 +79,7 @@ class Api::V1::GamesController < ApplicationController
       
     url = "https://api.rawg.io/api/games?genres=#{genre}&platforms=#{console_id}&page_size=20"
 
-    response = RestClient.get(url, headers ={
+    response = RestClient.get(url, headers = {
       'Content-Type': 'application/json',
       'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
       'token': key
@@ -91,12 +91,18 @@ class Api::V1::GamesController < ApplicationController
 
 
   def year_and_genre
-
     year = params[:year]
+    genre = params[:genre].sub(/^[A-Z]/) {|f| f.downcase }
+   
+    # rpg has to go into the api query like this  
+    if genre === "rPG"
+      genre = "role-playing-games-rpg"
+    end  
+
     key =  key = ENV["RAWG_API_KEY"]
     url = "https://api.rawg.io/api/games?dates=#{year}-01-01,#{year}-12-31&genres=#{genre}&platforms=23,31,28,49,74,26,167,77,43,119,79,112,117,111,12,107,27,83,106&page_size=20"
 
-    response = RestClient.get(url, headers ={
+    response = RestClient.get(url, headers = {
       'Content-Type': 'application/json',
       'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
       'token': key

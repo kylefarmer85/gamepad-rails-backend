@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
       post '/games/search', to: 'games#search'
       post '/games/favorites', to: 'games#favorites' #change to favorites controller?
+      
       post '/games/consoleandgenre', to: 'games#console_and_genre'
+      post '/games/yearandgenre', to: 'games#year_and_genre'
 
       post '/reviews/all', to: 'reviews#reviews_all'
 
