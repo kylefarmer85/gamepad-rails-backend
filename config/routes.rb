@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
       post '/reviews/all', to: 'reviews#reviews_all'
 
+      post '/favorites/remove', to: 'favorites#remove'
     end 
   end
 end

@@ -212,4 +212,5 @@ class Api::V1::GamesController < ApplicationController
       render json: {id: new_game.id, name: new_game.name, image: new_game.image, game_api_id: new_game.game_api_id}
     end
   end
+
 end
