@@ -59,7 +59,15 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def unfollow
+  
+    follow_to_destroy = Follow.find_by(follower_id: params[:follower_id], followed_user_id: params[:followed_user_id])
+
+    follow_to_destroy.destroy
+
+    unfollowed_user = User.find(params[:followed_user_id])
     
+    render json: {id: unfollowed_user.id , username: unfollowed_user.username}
+  end
 
 
   def destroy
