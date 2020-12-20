@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get '/current_user', to: 'auth#show'
 
       post '/games/search', to: 'games#search'
-      post '/games/favorites', to: 'games#favorites' #change to favorites controller?
+      post '/games/favorites', to: 'games#favorites'
 
       post '/games/consoleandgenre', to: 'games#console_and_genre'
       post '/games/yearandgenre', to: 'games#year_and_genre'
@@ -20,6 +20,9 @@ Rails.application.routes.draw do
       post '/reviews/all', to: 'reviews#reviews_all'
 
       post '/favorites/remove', to: 'favorites#remove'
+
+      post '/users/following', to: 'users#following'
+      post '/users/unfollow', to: 'users#unfollow'
     end 
   end
 end

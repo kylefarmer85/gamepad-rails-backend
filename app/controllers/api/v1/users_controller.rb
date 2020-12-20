@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     
-    user = User.create(username: params[:username], password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], pic: params[:pic], fav_genre: params[:fav_genre], fav_game: params[:fav_game])
+    user = User.create(username: params[:username].downcase, password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], pic: params[:pic], fav_genre: params[:fav_genre], fav_game: params[:fav_game])
     
     if user.save
       payload = { user_id: user.id }
@@ -41,9 +41,25 @@ class Api::V1::UsersController < ApplicationController
         user.save
         render json: user
     else
-        render json: user.errors.full_messages
+        render json: {error: user.errors.full_messages}, status: 401
     end
   end
+
+
+  def following
+    followed_user = User.find(params[:followed_user_id])
+
+    new_follow = Follow.create(follower_id: params[:follower_id], followed_user_id: followed_user.id)
+    
+    if new_follow.valid?
+      render json: followed_user
+    else 
+      render json: {error: new_follow.errors.full_messages}, status: 401
+    end
+  end
+
+  def unfollow
+    
 
 
   def destroy
