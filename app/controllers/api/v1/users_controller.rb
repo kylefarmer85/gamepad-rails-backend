@@ -25,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       payload = { user_id: user.id }
       token = JWT.encode(payload, 'my_secret', 'HS256')
-        render json: { user: {id: user.id, username: user.username, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game }, games: user.games, reviews: user.reviews, token: token}
+        render json: { user: {id: user.id, username: user.username, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game}, games: user.games, reviews: user.reviews, following: user.followings, followers: user.followers, token: token }
     else
         render json: {error: user.errors.full_messages}, status: 401
     end
@@ -65,7 +65,7 @@ class Api::V1::UsersController < ApplicationController
     follow_to_destroy.destroy
 
     unfollowed_user = User.find(params[:followed_user_id])
-    
+
     render json: {id: unfollowed_user.id , username: unfollowed_user.username}
   end
 
