@@ -19,13 +19,13 @@ class Api::V1::UsersController < ApplicationController
 
 
   def create
-    user = User.create(username: params[:username].downcase, password: params[:password], password_confirmation: params[:passwordConfirmation], email: params[:email], pic: params[:pic], fav_genre: params[:favGenre], fav_game: params[:favGame], photo: params[:photo])
-    
+    user = User.create(username: params[:username].downcase, password: params[:password], password_confirmation: params[:passwordConfirmation], email: params[:email], fav_genre: params[:favGenre], fav_game: params[:favGame], photo: params[:photo])
+  
     if user.save
       payload = { user_id: user.id }
       token = JWT.encode(payload, 'my_secret', 'HS256')
 
-      render json: { user: {id: user.id, username: user.username, email: user.email, pic: user.pic, fav_genre: user.fav_genre, fav_game: user.fav_game, photo: rails_blob_path(user.photo, disposition: "attachment")}, games: user.games, reviews: user.reviews, following: user.followings, followers: user.followers, token: token }
+      render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, photo: rails_blob_path(user.photo, disposition: "attachment")}, games: user.games, reviews: user.reviews, following: user.followings, followers: user.followers, token: token }
     else
       render json: {error: user.errors.full_messages}, status: 401
     end
@@ -87,6 +87,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def user_params
-    params.require(:user).permit(:username, :password, :password, :password_confirmation, :email, :pic, :fav_genre, :fav_game, :photo)
+    params.require(:user).permit(:username, :password, :password, :password_confirmation, :email, :fav_genre, :fav_game, :photo)
   end
 end

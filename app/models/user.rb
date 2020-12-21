@@ -1,11 +1,13 @@
 class User < ApplicationRecord
   has_secure_password
   validates :username, :email, uniqueness: true
-  validates :username, :password, :email, :pic, :fav_genre, :fav_game, presence: true
+  validates :username, :password, :email, :fav_genre, :fav_game, :photo, presence: true
 
   has_many :favorites, dependent: :destroy
   has_many :games, through: :favorites
   has_many :reviews, dependent: :destroy
+  has_many :followers, dependent: :destroy
+  has_many :followings, dependent: :destroy
 
   has_one_attached :photo
 

@@ -14,7 +14,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :followings, through: :given_follows, source: :followed_user
 
 
-  attributes :id, :username, :email, :pic, :fav_genre, :fav_game, :photo 
+  attributes :id, :username, :email, :fav_genre, :fav_game, :photo 
 
   def photo
     rails_blob_path(object.photo, only_path: true) if object.photo.attached?
