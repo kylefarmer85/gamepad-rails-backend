@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
       post '/users/following', to: 'users#following'
       post '/users/unfollow', to: 'users#unfollow'
+      post '/users/search', to: 'users#search'
     end 
   end
 end

@@ -8,7 +8,6 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-
     if user
       render json: user
 
@@ -19,7 +18,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def create
-    
     user = User.create(username: params[:username].downcase, password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], pic: params[:pic], fav_genre: params[:fav_genre], fav_game: params[:fav_game])
     
     if user.save
@@ -33,7 +31,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def update
-   
     user = User.find(params[:id])
     user.assign_attributes(user_params)
   
@@ -48,7 +45,6 @@ class Api::V1::UsersController < ApplicationController
 
   def following
     followed_user = User.find(params[:followed_user_id])
-
     new_follow = Follow.create(follower_id: params[:follower_id], followed_user_id: followed_user.id)
     
     if new_follow.valid?
@@ -58,15 +54,25 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def unfollow
-  
-    follow_to_destroy = Follow.find_by(follower_id: params[:follower_id], followed_user_id: params[:followed_user_id])
 
+  def unfollow
+    follow_to_destroy = Follow.find_by(follower_id: params[:follower_id], followed_user_id: params[:followed_user_id])
     follow_to_destroy.destroy
 
     unfollowed_user = User.find(params[:followed_user_id])
-
     render json: {id: unfollowed_user.id , username: unfollowed_user.username}
+  end
+
+
+  def search
+    search_term = params[:search_term].downcase
+    user = User.where("username like ?", search_term)
+
+    if user
+      render json: user[0].id
+    else 
+      render json: {error: user.errors.full_messages}, status: 401
+    end
   end
 
 
