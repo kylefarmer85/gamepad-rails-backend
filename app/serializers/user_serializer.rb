@@ -1,4 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
+  include Rails.application.routes.url_helpers
+
   has_many :favorites
   has_many :games, through: :favorites
   has_many :reviews
@@ -12,5 +14,11 @@ class UserSerializer < ActiveModel::Serializer
   has_many :followings, through: :given_follows, source: :followed_user
 
 
-  attributes :id, :username, :email, :pic, :fav_genre, :fav_game 
+  attributes :id, :username, :email, :pic, :fav_genre, :fav_game, :photo 
+
+  def photo
+    rails_blob_path(object.photo, only_path: true) if object.photo.attached?
+  end
+
 end
+
