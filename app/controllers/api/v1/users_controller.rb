@@ -19,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def create
-    user = User.create(username: params[:username].downcase, password: params[:password], password_confirmation: params[:passwordConfirmation], email: params[:email], fav_genre: params[:favGenre], fav_game: params[:favGame], photo: params[:photo])
+    user = User.create(username: params[:username].downcase, password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], fav_genre: params[:fav_genre], fav_game: params[:fav_game], photo: params[:photo])
   
     if user.save
       payload = { user_id: user.id }
@@ -34,11 +34,12 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    user.assign_attributes(user_params)
-  
+    user.update(user_params)
+    
     if user.valid?      
         user.save
-        render json: user
+
+        render json: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, photo: rails_blob_path(user.photo, disposition: "attachment")}
     else
         render json: {error: user.errors.full_messages}, status: 401
     end
@@ -87,6 +88,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def user_params
-    params.require(:user).permit(:username, :password, :password, :password_confirmation, :email, :fav_genre, :fav_game, :photo)
+    params.permit(:id, :username, :password, :password_confirmation, :email, :fav_genre, :fav_game, :photo)
   end
 end
