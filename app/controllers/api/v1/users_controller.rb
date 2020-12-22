@@ -34,9 +34,10 @@ class Api::V1::UsersController < ApplicationController
 
 
   def update
+    byebug
     user = User.find(params[:id])
     user.update(user_params)
-    
+    byebug
     if user.valid?      
         user.save
 
@@ -77,6 +78,17 @@ class Api::V1::UsersController < ApplicationController
     else 
       render json: {error: user.errors.full_messages}, status: 401
     end
+  end
+
+
+
+  def search_by_console_and_genre
+    console = params[:console]
+    genre = params[:genre]
+
+    users = User.where(fav_console: console, fav_genre: genre)
+
+    render json: users
   end
 
 
