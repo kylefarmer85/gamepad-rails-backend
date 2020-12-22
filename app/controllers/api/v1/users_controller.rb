@@ -19,13 +19,14 @@ class Api::V1::UsersController < ApplicationController
 
 
   def create
-    user = User.create(username: params[:username].downcase, password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], fav_genre: params[:fav_genre], fav_game: params[:fav_game], photo: params[:photo])
+    params[:username].downcase
+    user = User.create(user_params)
   
     if user.save
       payload = { user_id: user.id }
       token = JWT.encode(payload, 'my_secret', 'HS256')
 
-      render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, photo: rails_blob_path(user.photo, disposition: "attachment")}, games: user.games, reviews: user.reviews, following: user.followings, followers: user.followers, token: token }
+      render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment")}, games: user.games, reviews: user.reviews, following: user.followings, followers: user.followers, token: token }
     else
       render json: {error: user.errors.full_messages}, status: 401
     end
@@ -39,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
     if user.valid?      
         user.save
 
-        render json: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, photo: rails_blob_path(user.photo, disposition: "attachment")}
+        render json: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment")}
     else
         render json: {error: user.errors.full_messages}, status: 401
     end
@@ -88,6 +89,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def user_params
-    params.permit(:id, :username, :password, :password_confirmation, :email, :fav_genre, :fav_game, :photo)
+    params.permit(:id, :username, :password, :password_confirmation, :email, :fav_genre, :fav_game, :photo, :fav_console)
   end
 end
