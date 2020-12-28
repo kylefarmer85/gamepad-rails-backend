@@ -2,6 +2,7 @@ class Api::V1::AuthController < ApplicationController
   include Rails.application.routes.url_helpers
 
   def create
+
     user = User.find_by(username: params[:username].downcase)
     
     if user && user.authenticate(params[:password])
@@ -17,6 +18,7 @@ class Api::V1::AuthController < ApplicationController
 
 
   def show
+    
     token = request.headers[:Authorization].split(' ')[1]
     decoded_token = JWT.decode(token, 'my_secret' , true, { algorithm: 'HS256' })
     user_id = decoded_token[0]['user_id']

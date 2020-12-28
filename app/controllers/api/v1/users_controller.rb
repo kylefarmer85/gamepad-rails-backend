@@ -2,12 +2,14 @@ class Api::V1::UsersController < ApplicationController
   include Rails.application.routes.url_helpers
 
   def index
+
     users = User.all
     render json: users
   end
 
 
   def show
+
     user = User.find(params[:id])
     if user
       render json: user
@@ -19,6 +21,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def create
+
     params[:username].downcase
     user = User.create(user_params)
   
@@ -34,10 +37,10 @@ class Api::V1::UsersController < ApplicationController
 
 
   def update
-    byebug
+
     user = User.find(params[:id])
     user.update(user_params)
-    byebug
+
     if user.valid?      
         user.save
 
@@ -49,6 +52,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def following
+
     followed_user = User.find(params[:followed_user_id])
     new_follow = Follow.create(follower_id: params[:follower_id], followed_user_id: followed_user.id)
     
@@ -61,6 +65,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def unfollow
+
     follow_to_destroy = Follow.find_by(follower_id: params[:follower_id], followed_user_id: params[:followed_user_id])
     follow_to_destroy.destroy
 
@@ -70,6 +75,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def search
+
     search_term = params[:search_term].downcase
     user = User.where("username like ?", search_term)
 
@@ -83,6 +89,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def search_by_console_and_genre
+
     console = params[:console]
     genre = params[:genre]
 
@@ -93,6 +100,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def destroy
+
     user = User.find(params[:id])
     user.destroy
 
@@ -101,6 +109,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   def user_params
+    
     params.permit(:id, :username, :password, :password_confirmation, :email, :fav_genre, :fav_game, :photo, :fav_console)
   end
 end

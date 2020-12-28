@@ -24,4 +24,22 @@ class User < ApplicationRecord
   # returns an array of other users who the user has followed
   has_many :followings, through: :given_follows, source: :followed_user
 
+
+  def highest_rated_by_user_followings
+  f_reviews = []
+    self.followings.each do |f| 
+      f.reviews.each{|r| f_reviews << r}
+    end
+
+  games_hash = {}
+    f_reviews.each do |review|
+        if review.rating > 0
+            games_hash[review.game] = review.game.avg_rating
+        end          
+    end
+  hash = games_hash.sort_by {|k,v| -v}.to_h
+  return hash.keys
+  end
+
+
 end

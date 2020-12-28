@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       post '/games/consoleandgenre', to: 'games#console_and_genre'
       post '/games/yearandgenre', to: 'games#year_and_genre'
       post '/games/topbyconsole', to: 'games#top_by_console'
+      post '/games/highestratedbyfollowings', to: 'games#highest_rated_by_followings'
 
       post '/reviews/all', to: 'reviews#reviews_all'
 

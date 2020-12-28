@@ -1,6 +1,7 @@
 class Api::V1::GamesController < ApplicationController
 
   def show
+
     game_api_id = params[:id]
     key = ENV["RAWG_API_KEY"]
     url = "https://api.rawg.io/api/games/#{game_api_id}"
@@ -25,6 +26,7 @@ class Api::V1::GamesController < ApplicationController
 
 
   def search
+
     search_term = params[:search_term]
     key = ENV["RAWG_API_KEY"]
     url = "https://api.rawg.io/api/games?search=#{search_term}&platforms=23,31,28,49,74,26,167,77,43,119,79,112,117,111,12,107,27,83,106"
@@ -91,6 +93,7 @@ class Api::V1::GamesController < ApplicationController
 
 
   def year_and_genre
+
     year = params[:year]
     genre = params[:genre].sub(/^[A-Z]/) {|f| f.downcase }
    
@@ -155,36 +158,46 @@ class Api::V1::GamesController < ApplicationController
   end
 
 
-  def top_rated_by_developers
-    developer = params[:developer_id]
-    key =  key = ENV["RAWG_API_KEY"]
-    url = "https://rawg.io/api/games?ordering=-rating&developers=#{developer_id}"
+  def highest_rated_by_followings
 
-    response = RestClient.get(url, headers ={
-      'Content-Type': 'application/json',
-      'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
-      'token': key
-    })
-  
-    top_rated_by_developer_results = JSON.parse(response)
-    render json: top_rated_by_developer_results
+    user = User.find(params[:id])
+    games = user.highest_rated_by_user_followings
+
+    render json: games
   end
 
 
-  def suggested_games
-    game = params[:game_name]
-    key =  key = ENV["RAWG_API_KEY"]
-    url = "https://rawg.io/api/games/#{game_name}/suggested"
 
-    response = RestClient.get(url, headers ={
-      'Content-Type': 'application/json',
-      'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
-      'token': key
-    })
+  # def top_rated_by_developers
+  #   developer = params[:developer_id]
+  #   key =  key = ENV["RAWG_API_KEY"]
+  #   url = "https://rawg.io/api/games?ordering=-rating&developers=#{developer_id}"
+
+  #   response = RestClient.get(url, headers ={
+  #     'Content-Type': 'application/json',
+  #     'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
+  #     'token': key
+  #   })
   
-    game_suggestion_results = JSON.parse(response)
-    render json: game_suggestion_results
-  end
+  #   top_rated_by_developer_results = JSON.parse(response)
+  #   render json: top_rated_by_developer_results
+  # end
+
+
+  # def suggested_games
+  #   game = params[:game_name]
+  #   key =  key = ENV["RAWG_API_KEY"]
+  #   url = "https://rawg.io/api/games/#{game_name}/suggested"
+
+  #   response = RestClient.get(url, headers ={
+  #     'Content-Type': 'application/json',
+  #     'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
+  #     'token': key
+  #   })
+  
+  #   game_suggestion_results = JSON.parse(response)
+  #   render json: game_suggestion_results
+  # end
 
   # user.favorites.map {|f| f.game}
 
