@@ -1,9 +1,11 @@
 class Api::V1::ReviewsController < ApplicationController
+  
 
-  def index
-    reviews = Review.all
+  def infinite_scroll
+    reviews = Review.page(params[:page]).per(8)
     render json: reviews
   end
+
 
   def game_reviews
     game_api_id = params[:game_api_id]

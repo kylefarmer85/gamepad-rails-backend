@@ -1,13 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   include Rails.application.routes.url_helpers
 
-  def index
-
-    users = User.all
-    render json: users
-  end
-
-
   def show
 
     user = User.find(params[:id])
@@ -109,7 +102,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def user_params
-    
     params.permit(:id, :username, :password, :password_confirmation, :email, :fav_genre, :fav_game, :photo, :fav_console)
   end
 end

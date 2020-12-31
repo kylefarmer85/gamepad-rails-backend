@@ -5,8 +5,8 @@ Rails.application.routes.draw do
       resources :users
       resources :favorites
       resources :games, only: [:show]
-      resources :reviews, only: [:index, :create, :destroy]
-      
+      resources :reviews, only: [:create, :destroy]
+
       post '/auth', to: 'auth#create'
       get '/current_user', to: 'auth#show'
 
@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       post '/games/topbyconsole', to: 'games#top_by_console'
       post '/games/highestratedbyfollowings', to: 'games#highest_rated_by_followings'
 
+      get '/reviews/:page', to: 'reviews#infinite_scroll'
       post '/reviews/gamereviews', to: 'reviews#game_reviews'
 
       post '/favorites/remove', to: 'favorites#remove'
