@@ -23,6 +23,8 @@ gem "jwt", "~> 2.2"
 gem 'rest-client'
 gem 'uri'
 
+
+
 gem 'dotenv-rails'
 
 # Use Active Storage variant
