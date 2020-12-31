@@ -1,6 +1,10 @@
 class Api::V1::ReviewsController < ApplicationController
 
-  def reviews_all
+  def index
+
+  end
+
+  def game_reviews
     game_api_id = params[:game_api_id]
     games = Game.all
     found_game = games.find_by(game_api_id: game_api_id)
