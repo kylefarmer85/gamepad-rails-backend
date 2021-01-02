@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       resources :favorites
+      resources :comments
       resources :games, only: [:show]
       resources :reviews, only: [:create, :destroy]
 
