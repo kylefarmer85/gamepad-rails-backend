@@ -36,15 +36,6 @@ ActiveRecord::Schema.define(version: 2021_01_02_010635) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "beats", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "game_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_beats_on_game_id"
-    t.index ["user_id"], name: "index_beats_on_user_id"
-  end
-
   create_table "comments", force: :cascade do |t|
     t.string "content"
     t.string "username"
@@ -86,15 +77,6 @@ ActiveRecord::Schema.define(version: 2021_01_02_010635) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "owns", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "game_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_owns_on_game_id"
-    t.index ["user_id"], name: "index_owns_on_user_id"
-  end
-
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id"
     t.integer "game_id"
@@ -120,10 +102,6 @@ ActiveRecord::Schema.define(version: 2021_01_02_010635) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "beats", "games"
-  add_foreign_key "beats", "users"
   add_foreign_key "comments", "reviews"
   add_foreign_key "comments", "users"
-  add_foreign_key "owns", "games"
-  add_foreign_key "owns", "users"
 end
