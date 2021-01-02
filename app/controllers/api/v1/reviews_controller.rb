@@ -2,7 +2,7 @@ class Api::V1::ReviewsController < ApplicationController
   
 
   def infinite_scroll
-    reviews = Review.page(params[:page]).per(8)
+    reviews = Review.order("created_at DESC").page(params[:page]).per(8)
     render json: reviews
   end
 
