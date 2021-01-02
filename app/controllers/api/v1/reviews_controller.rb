@@ -2,8 +2,28 @@ class Api::V1::ReviewsController < ApplicationController
   
 
   def infinite_scroll
-    reviews = Review.order("created_at DESC").page(params[:page]).per(8)
-    render json: reviews
+    
+    if params[:user_id] === false
+  
+      reviews = Review.order("created_at DESC").page(params[:page_counter]).per(8)
+      render json: reviews
+    end  
+
+    if params[:user_id] && params[:followings_bool]
+     
+      def get_followings_reviews
+        user = User.find(params[:user_id])
+        reviews = []
+        user.followings.each {|follower| reviews << follower.reviews}
+        return reviews.flatten
+      end
+      followings_reviews = get_followings_reviews
+   
+      paginated_array = Kaminari.paginate_array(followings_reviews).page(params[:page_counter]).per(8).reverse
+      
+      render json: paginated_array.to_json(:include=>:comments)  
+    end  
+
   end
 
 
