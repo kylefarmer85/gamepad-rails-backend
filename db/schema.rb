@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_22_153629) do
+ActiveRecord::Schema.define(version: 2021_01_02_010635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,31 @@ ActiveRecord::Schema.define(version: 2020_12_22_153629) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "beats", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_beats_on_game_id"
+    t.index ["user_id"], name: "index_beats_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.string "username"
+    t.string "user_pic"
+    t.string "review_username"
+    t.integer "review_user_id"
+    t.integer "game_api_id"
+    t.string "game_name"
+    t.bigint "user_id", null: false
+    t.bigint "review_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["review_id"], name: "index_comments_on_review_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -61,6 +86,15 @@ ActiveRecord::Schema.define(version: 2020_12_22_153629) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "owns", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_owns_on_game_id"
+    t.index ["user_id"], name: "index_owns_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id"
     t.integer "game_id"
@@ -86,4 +120,10 @@ ActiveRecord::Schema.define(version: 2020_12_22_153629) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "beats", "games"
+  add_foreign_key "beats", "users"
+  add_foreign_key "comments", "reviews"
+  add_foreign_key "comments", "users"
+  add_foreign_key "owns", "games"
+  add_foreign_key "owns", "users"
 end
