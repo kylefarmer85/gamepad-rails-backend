@@ -7,4 +7,13 @@ class Api::V1::CommentsController < ApplicationController
     render json: {id: comment.id, user_id: comment.user_id, review_id: comment.review_id, content: comment.content, username: comment.username, user_pic: comment.user_pic, review_username: comment.review_username, review_user_id: comment.review_user_id, game_name: comment.game_name, created_at: comment.created_at }
   end
 
+  
+  def destroy
+
+    comment = Comment.find(params[:id])
+    comment.destroy
+
+    render json: comment
+  end
+
 end
