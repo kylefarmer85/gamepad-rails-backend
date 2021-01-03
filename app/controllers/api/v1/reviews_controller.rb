@@ -3,14 +3,20 @@ class Api::V1::ReviewsController < ApplicationController
 
   def infinite_scroll
     #if user is not logged in or selects all reviews
-    if params[:user_id] === false
-  
+    if !params[:user_id] 
+
+      #sorts reviews by newest or oldest
+      params[:sort_by_newest] ?
+
       reviews = Review.order("created_at DESC").page(params[:page_counter]).per(8)
+      :
+      reviews = Review.order("created_at ASC").page(params[:page_counter]).per(8)
+
       render json: reviews
     end  
 
     #if user is logged in and selects followed user's reviews
-    if params[:user_id] && params[:followings_bool]
+    if params[:user_id]
      
       def get_followings_reviews
         user = User.find(params[:user_id])
@@ -18,10 +24,17 @@ class Api::V1::ReviewsController < ApplicationController
         user.followings.each {|follower| reviews << follower.reviews}
         return reviews.flatten
       end
+
       followings_reviews = get_followings_reviews
       
+      #sorts reviews by newest or oldest
+      params[:sort_by_newest] ?
+
+      #paginate_array allows Kaminari to work on regular arrays
       paginated_array = Kaminari.paginate_array(followings_reviews).page(params[:page_counter]).per(8).reverse
-      
+      :
+      paginated_array = Kaminari.paginate_array(followings_reviews).page(params[:page_counter]).per(8)
+
       render json: paginated_array.to_json(:include=>:comments)  
     end  
 
