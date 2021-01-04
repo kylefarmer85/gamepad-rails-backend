@@ -37,7 +37,12 @@ class Api::V1::ReviewsController < ApplicationController
 
       render json: paginated_array.to_json(:include=>:comments)  
     end  
+  end
 
+
+  def show
+    review = Review.find(params[:id])
+    render json: review
   end
 
 
