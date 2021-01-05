@@ -68,12 +68,10 @@ class Api::V1::UsersController < ApplicationController
 
 
   def search
-
     search_term = params[:search_term].downcase
     users = User.where("username like ?", '%' + search_term.first(3) + '%')
 
     if users
-      # render json: user[0].id
       render json: users
     else 
       render json: {error: users.errors.full_messages}, status: 401
