@@ -10,7 +10,7 @@ class Api::V1::AuthController < ApplicationController
 
       token = JWT.encode(payload, 'my_secret', 'HS256')
 
-      render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment") }, games: user.games, reviews: user.reviews, comments: user.comments, following: user.followings, followers: user.followers, token: token}
+      render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment") }, games: user.games, following: user.followings, followers: user.followers, token: token}
     else
       render json: { error: user.errors.full_messages }, status: 401
     end
@@ -24,9 +24,7 @@ class Api::V1::AuthController < ApplicationController
     user_id = decoded_token[0]['user_id']
     user = User.find(user_id)
 
-    render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment") }, games: user.games, reviews: user.reviews, comments: user.comments, following: user.followings, followers: user.followers, token: token}
+    render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment") }, games: user.games, following: user.followings, followers: user.followers, token: token}
   end
-
-  # user.to_json(include: {reviews: { include: :comments}})
 
 end
