@@ -167,40 +167,6 @@ class Api::V1::GamesController < ApplicationController
   end
 
 
-
-  # def top_rated_by_developers
-  #   developer = params[:developer_id]
-  #   key =  key = ENV["RAWG_API_KEY"]
-  #   url = "https://rawg.io/api/games?ordering=-rating&developers=#{developer_id}"
-
-  #   response = RestClient.get(url, headers ={
-  #     'Content-Type': 'application/json',
-  #     'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
-  #     'token': key
-  #   })
-  
-  #   top_rated_by_developer_results = JSON.parse(response)
-  #   render json: top_rated_by_developer_results
-  # end
-
-
-  # def suggested_games
-  #   game = params[:game_name]
-  #   key =  key = ENV["RAWG_API_KEY"]
-  #   url = "https://rawg.io/api/games/#{game_name}/suggested"
-
-  #   response = RestClient.get(url, headers ={
-  #     'Content-Type': 'application/json',
-  #     'User-Agent': 'Kyle Farmer Coding Bootcamp Project',
-  #     'token': key
-  #   })
-  
-  #   game_suggestion_results = JSON.parse(response)
-  #   render json: game_suggestion_results
-  # end
-
-  # user.favorites.map {|f| f.game}
-
   def favorites
     user_id = params[:user_id]
     game_api_id = params[:game_api_id]
