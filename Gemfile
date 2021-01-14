@@ -25,6 +25,8 @@ gem 'uri'
 
 gem 'kaminari'
 
+gem "aws-sdk-s3", require: false
+
 gem 'dotenv-rails'
 
 # Use Active Storage variant
