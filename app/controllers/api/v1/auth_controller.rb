@@ -12,7 +12,8 @@ class Api::V1::AuthController < ApplicationController
 
       render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment") }, games: user.games, following: user.followings, followers: user.followers, token: token}
     else
-      render json: { error: user.errors.full_messages }, status: 401
+
+      render json: { error: "Invalid Username/Password" }
     end
   end
 

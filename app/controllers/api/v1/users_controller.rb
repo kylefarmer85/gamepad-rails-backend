@@ -8,7 +8,7 @@ class Api::V1::UsersController < ApplicationController
       render json: user
 
     else  
-      render json: {error: user.errors.full_messages}, status: 401
+      render json: {error: "User not found"}
     end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::UsersController < ApplicationController
 
       render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment")}, games: user.games, following: user.followings, followers: user.followers, token: token }
     else
-      render json: {error: user.errors.full_messages}, status: 401
+      render json: {error: "Unable to create new user"}
     end
   end
 
@@ -39,7 +39,7 @@ class Api::V1::UsersController < ApplicationController
 
         render json: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment")}
     else
-        render json: {error: user.errors.full_messages}, status: 401
+        render json: {error: "Unable to update user"}
     end
   end
 
@@ -52,7 +52,7 @@ class Api::V1::UsersController < ApplicationController
     if new_follow.valid?
       render json: followed_user
     else 
-      render json: {error: new_follow.errors.full_messages}, status: 401
+      render json: {error: "Unable to follow user"}
     end
   end
 
@@ -68,14 +68,14 @@ class Api::V1::UsersController < ApplicationController
 
 
   def search
-    
+
     search_term = params[:search_term].downcase
     users = User.where("username like ?", '%' + search_term.first(3) + '%')
 
     if users
       render json: users
     else 
-      render json: {error: users.errors.full_messages}, status: 401
+      render json: {error: "No users matching search"}
     end
   end
 
