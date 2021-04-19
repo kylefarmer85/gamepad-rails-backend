@@ -4,8 +4,8 @@ class Api::V1::GamesController < ApplicationController
 
     game_api_id = params[:id]
     key = ENV["RAWG_API_KEY"]
-    url = "https://api.rawg.io/api/games/#{game_api_id}"
-    url_ss = "https://api.rawg.io/api/games/#{game_api_id}/screenshots"
+    url = "https://api.rawg.io/api/games/#{game_api_id}?key=#{key}"
+    url_ss = "https://api.rawg.io/api/games/#{game_api_id}/screenshots?key=#{key}"
 
     response = RestClient.get(url, headers = {
       'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ class Api::V1::GamesController < ApplicationController
 
     search_term = params[:search_term]
     key = ENV["RAWG_API_KEY"]
-    url = "https://api.rawg.io/api/games?search=#{search_term}&platforms=23,31,28,49,74,26,167,77,43,119,79,112,117,111,12,107,27,83,106"
+    url = "https://api.rawg.io/api/games?key=#{key}&search=#{search_term}&platforms=23,31,28,49,74,26,167,77,43,119,79,112,117,111,12,107,27,83,106"
 
     response = RestClient.get(url, headers ={
       'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ class Api::V1::GamesController < ApplicationController
 
     key =  key = ENV["RAWG_API_KEY"]
       
-    url = "https://api.rawg.io/api/games?genres=#{genre}&platforms=#{console_id}&page_size=100"
+    url = "https://api.rawg.io/api/games?key=#{key}&genres=#{genre}&platforms=#{console_id}&page_size=100"
 
     response = RestClient.get(url, headers = {
       'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ class Api::V1::GamesController < ApplicationController
     end  
 
     key =  key = ENV["RAWG_API_KEY"]
-    url = "https://api.rawg.io/api/games?dates=#{year}-01-01,#{year}-12-31&genres=#{genre}&platforms=23,31,28,49,74,26,167,77,43,119,79,112,117,111,12,107,27,83,106&page_size=100"
+    url = "https://api.rawg.io/api/games?key=#{key}&dates=#{year}-01-01,#{year}-12-31&genres=#{genre}&platforms=23,31,28,49,74,26,167,77,43,119,79,112,117,111,12,107,27,83,106&page_size=100"
 
     response = RestClient.get(url, headers = {
       'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ class Api::V1::GamesController < ApplicationController
     console_id = console_list[:"#{console}"]
 
     key =  key = ENV["RAWG_API_KEY"]
-    url = "https://rawg.io/api/games?ordering=-rating&platforms=#{console_id}&page_size=100"
+    url = "https://rawg.io/api/games?key=#{key}&ordering=-rating&platforms=#{console_id}&page_size=100"
 
     response = RestClient.get(url, headers ={
       'Content-Type': 'application/json',
