@@ -2,7 +2,6 @@ class Api::V1::UsersController < ApplicationController
   include Rails.application.routes.url_helpers
 
   def show
-
     user = User.find(params[:id])
     if user
       render json: user
@@ -14,7 +13,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def create
-
     params[:username].downcase
     user = User.create(user_params)
   
@@ -22,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
       payload = { user_id: user.id }
       token = JWT.encode(payload, 'my_secret', 'HS256')
 
-      render json: { user: {id: user.id, username: user.username, email: user.email, fav_genre: user.fav_genre, fav_game: user.fav_game, fav_console: user.fav_console, photo: rails_blob_path(user.photo, disposition: "attachment")}, games: user.games, following: user.followings, followers: user.followers, token: token }
+      render json: {user: UserSerializer.new(user), token: token}
     else
       render json: {error: "Unable to create new user"}
     end
@@ -30,7 +28,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def update
-
     user = User.find(params[:id])
     user.update(user_params)
 
@@ -45,7 +42,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def following
-
     followed_user = User.find(params[:followed_user_id])
     new_follow = Follow.create(follower_id: params[:follower_id], followed_user_id: followed_user.id)
     
@@ -58,7 +54,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def unfollow
-
     follow_to_destroy = Follow.find_by(follower_id: params[:follower_id], followed_user_id: params[:followed_user_id])
     follow_to_destroy.destroy
 
@@ -68,7 +63,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def search
-
     search_term = params[:search_term].downcase
     users = User.where("username like ?", '%' + search_term.first(3) + '%')
 
@@ -79,10 +73,8 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-
-
+  
   def search_by_console_and_genre
-
     console = params[:console]
     genre = params[:genre]
 
@@ -93,7 +85,6 @@ class Api::V1::UsersController < ApplicationController
 
 
   def destroy
-
     user = User.find(params[:id])
     user.destroy
 
