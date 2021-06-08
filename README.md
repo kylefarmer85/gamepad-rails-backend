@@ -9,7 +9,7 @@ Deployed on Heroku: https://game-pad.herokuapp.com
 
 YouTube Demo Video: https://www.youtube.com/watch?v=uQLKLM_15yA
 
-![Alt text](src/assets/images/gamepad-logo.png?raw=true 'Logo')
+![Alt text](gamepad-logo.png?raw=true 'Logo')
 
 ## How to run the application
   - Clone this backend and the frontend: https://github.com/kylefarmer85/gamepad-react-frontend
@@ -20,6 +20,6 @@ YouTube Demo Video: https://www.youtube.com/watch?v=uQLKLM_15yA
   - The API will begin running on localhost:3000
   - Navigate to the frontend directory
   - Run `$ npm install`
-  - Run `$ npm start` and the app should connect to localost:3001
+  - Run `$ npm start` and the app will load on localhost:3001
 
 Created using the excellent RAWG API - https://rawg.io/apidocs
