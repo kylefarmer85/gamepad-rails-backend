@@ -11,6 +11,24 @@ YouTube Demo Video: https://www.youtube.com/watch?v=uQLKLM_15yA
 
 ![Alt text](gamepad-logo.png?raw=true 'Logo')
 
+## Overview
+  This API was created to contain the data used in the GamePad app. It compiles data from the RAWG Games API - https://rawg.io/apidocs.  
+
+* Ruby version
+  - Ruby '2.6.1'
+* Additional Gems
+  - 'active_model_serializers'
+  - 'bcrypt', '~> 3.1.7'
+  - "jwt", "~> 2.2"
+  - 'rest-client'
+  - 'uri'
+  - 'kaminari'
+  - "aws-sdk-s3"
+  
+## Database Creation
+
+  This API runs on a PostgreSQL database. For help regarding the creation of a PostgreSQL database visit [tutorialspoint](https://www.tutorialspoint.com/postgresql/postgresql_create_database.htm). [TablePlus](https://tableplus.com/blog/2018/10/how-to-start-stop-restart-postgresql-server.html) is helpful with regards to stoping and starting a PostgreSQL database.
+
 ## How to run the application
   - Clone this backend and the frontend: https://github.com/kylefarmer85/gamepad-react-frontend
   - Navigate to the backend directory and run `$ bundle install`
