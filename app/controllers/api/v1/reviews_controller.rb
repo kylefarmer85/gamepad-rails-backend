@@ -77,7 +77,7 @@ class Api::V1::ReviewsController < ApplicationController
     if found_game 
       review = Review.create(user_id: user_id, game_id: found_game.id, game_name: game_name, content: content, rating: rating, username: username, user_pic: user_pic, game_api_id: game_api_id)   
 
-      render json: {id: review.id, user_id: review.user_id, game_id: review.game_id, game_name: review.game_name, content: review.content, rating: review.rating, username: review.username, user_pic: review.user_pic, game_api_id: review.game_api_id, comments: review.comments}
+      render json: review
 
     #else create a new game in db, and then use the new game id for the new review  
     else 
@@ -85,7 +85,7 @@ class Api::V1::ReviewsController < ApplicationController
 
       review = Review.create(user_id: user_id, game_id: new_game.id, game_name: game_name, content: content, rating: rating, username: username, user_pic: user_pic, game_api_id: game_api_id)
 
-      render json: {id: review.id, user_id: review.user_id, game_id: review.game_id, game_name: review.game_name, content: review.content, rating: review.rating, username: review.username, user_pic: review.user_pic, game_api_id: review.game_api_id, comments: review.comments}
+      render json: review
     end
   end
 
